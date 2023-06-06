@@ -9,23 +9,25 @@ const productos = [
 
 let carrito = [];
 
+const mostrarProductos = () => {
+    let prod = '';
+    for (let i = 0 ; i < productos.length ; i++) {
+        prod += productos[i].nombreProducto +" "+"$"+ productos[i].precio + '\n';
+    }
+    return prod;
+}
+
+
 let seleccionProducto = prompt("Buenas! Desea llevar algun producto?");
 
 while(seleccionProducto !="si" && seleccionProducto != "no"){
     alert("Por favor ingresar si o no");
-    seleccionProducto = prompt("Buenas! Desea llevar algun producto?")
+    seleccionProducto = prompt("Buenas! Desea comprar algun producto?")
 }
 
-if(seleccionProducto === "si"){
-    alert("Te dejo los productos que tenemos disponibles")
-    let todosProductos = productos.map((producto) => producto.nombreProducto +" " + "$"+ producto.precio + "\n" );
-    alert(todosProductos.join("-"));
-} else if(seleccionProducto === "no"){
-alert("Gracias por visitarnos! vuelva pronto");
-}
 
-while(seleccionProducto != "no"){
-    let producto = prompt("Elige los porductos para tu carrito");
+while(seleccionProducto === "si"){
+    let producto = prompt("Elige los productos para tu carrito"+"\n"+mostrarProductos());
     let precio = 0;
 
     if( producto === "harina" || producto === "gaseosa" || producto === "yogurt" || producto === "leche" || producto === "cerveza"||producto === "galletitas"){
@@ -53,19 +55,24 @@ while(seleccionProducto != "no"){
         }
       let unidad = parseInt(prompt("¿Cuantas unidades vas a llevar?"));
       carrito.push({producto, unidad, precio});
-       
+     
     } 
     seleccionProducto = prompt("¿Queres seguir agregando productos al carrito?");
-    let salida ="";
+
+}
+
+
+
     if(seleccionProducto === "no"){
-        alert("Gracias por la compra!");
-        carrito.forEach(carritoFinal =>{
-            salida+="Producto: "+ carritoFinal.producto + " - "+ "Unidades: " + carritoFinal.unidad +" - "+ "Precio total: $" +(carritoFinal.unidad* carritoFinal.precio)+"\n";
-        })
-        alert(salida);
+        let compras = '';
+        for (let i = 0 ; i < carrito.length ; i++) {
+            compras += carrito[i].unidad +" unidades de "+ carrito[i].producto +" = "+ " $"+ carrito[i].unidad*carrito[i].precio + '\n';
+        }
+        alert(compras);
     }
 
 
-}
+
 const total = carrito.reduce((acu, el) => acu + el.precio * el.unidad, 0);
 alert("El precio total es: $"+ total);
+alert("Gracias por su compra!")
